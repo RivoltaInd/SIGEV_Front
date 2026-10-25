@@ -1,0 +1,262 @@
+/* Estilos generales de SIGEV - paleta navy / morado del diseño de la app */
+:root {
+  --navy: #1e2b5e;
+  --morado: #6b21a8;
+  --fondo: #f4f5fa;
+  --borde: #d9dce8;
+  --texto: #1c1f2e;
+  --rojo: #c62828;
+  --verde: #2e7d32;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+.encabezado {
+  background: #fff;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--borde);
+}
+.encabezado-logo { height: 42px; }
+.usuario { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.usuario em { color: var(--morado); font-style: normal; font-weight: bold; }
+
+.menu {
+  display: flex;
+  gap: 4px;
+  background: #fff;
+  box-shadow: 0 1px 0 var(--borde);
+  padding: 0 24px;
+  border-bottom: 1px solid var(--borde);
+}
+.menu button {
+  border: none;
+  background: none;
+  padding: 14px 18px;
+  font-size: 15px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  color: var(--texto);
+}
+.menu button.activo { border-bottom-color: var(--morado); color: var(--morado); font-weight: bold; }
+
+.contenido { padding: 20px 24px; max-width: 1200px; margin: 0 auto; }
+.contenido h2 { margin-top: 0; color: var(--navy); }
+
+.modulo { display: grid; grid-template-columns: 320px 1fr; gap: 18px; align-items: start; }
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 18px;
+}
+.tarjeta h3 { margin-top: 0; font-size: 17px; }
+
+.formulario { display: flex; flex-direction: column; gap: 6px; }
+.formulario label { font-size: 13px; font-weight: bold; margin-top: 6px; }
+input, select {
+  padding: 9px 10px;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  width: 100%;
+}
+input:focus, select:focus { outline: 2px solid var(--morado); border-color: transparent; }
+
+.acciones { display: flex; gap: 8px; margin-top: 12px; }
+
+button {
+  padding: 7px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  margin-right: 4px;
+}
+button:hover { background: #eef0f7; }
+button.primario { background: var(--morado); color: #fff; border-color: var(--morado); padding: 9px 16px; }
+button.primario:hover { background: #581c87; }
+button.peligro { color: var(--rojo); }
+
+.error { color: var(--rojo); font-size: 12px; }
+
+.lista { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--borde); }
+th { background: #eef0f7; color: var(--navy); }
+td.bajo { color: var(--rojo); font-weight: bold; }
+
+.buscador { margin-bottom: 12px; }
+.vacio { color: #777; font-style: italic; }
+
+.resumen {
+  display: flex;
+  justify-content: space-between;
+  background: #f3e8ff;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 8px;
+}
+.total-general { text-align: right; margin-bottom: 0; }
+
+.alerta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  color: #fff;
+}
+.alerta.exito { background: var(--verde); }
+.alerta.error { background: var(--rojo); }
+.alerta button { background: none; border: none; color: #fff; font-size: 20px; margin: 0; }
+
+.pie { text-align: center; font-size: 12px; color: #777; padding: 20px; }
+
+/* En pantallas pequeñas el formulario va encima de la tabla */
+@media (max-width: 800px) {
+  .modulo { grid-template-columns: 1fr; }
+}
+
+/* ---------- Login ---------- */
+.login { display: flex; min-height: 100vh; background: #fff; }
+.login-marca {
+  flex: 0 0 40%;
+  background: #dcd6e8;
+  position: relative;
+  overflow: hidden;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.login-logo { width: 100%; max-width: 400px; position: relative; z-index: 1; }
+/* Curva inferior del panel */
+.login-ola {
+  position: absolute;
+  left: -70%;
+  right: -10%;
+  top: -28%;
+  height: 100%;
+  background: #e8e8f2;
+  border-radius: 0 0 50% 50%;
+}
+.login-textos { position: relative; z-index: 1; }
+.login-titulo { font-size: 22px; color: #3d4570; margin: 0 0 14px; }
+.login-sub { font-size: 18px; color: #7a7f9e; margin: 0; }
+
+.login-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  max-width: 760px;
+  gap: 8px;
+}
+.login-form h1 { color: var(--navy); font-size: 32px; margin: 0 0 24px; }
+.login-form > label { color: #6b7080; font-size: 17px; margin-top: 10px; }
+.login-form input[type=email], .login-form input[type=password] {
+  padding: 16px;
+  border: 2px solid #d6d6e0;
+  border-radius: 10px;
+  font-size: 16px;
+}
+.login-check { display: flex; align-items: center; gap: 10px; color: #6b7080; font-size: 16px; margin: 8px 0; cursor: pointer; }
+.login-check input { width: 22px; height: 22px; accent-color: var(--morado); }
+.login-boton {
+  background: #6b21a8;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 18px 0 0;
+}
+.login-boton:hover { background: #581c87; }
+.login-prueba {
+  background: #f2f3f5;
+  border-radius: 10px;
+  padding: 18px 24px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #6b7080;
+  font-size: 15px;
+}
+.login-prueba strong { letter-spacing: 1px; font-size: 14px; }
+
+@media (max-width: 800px) {
+  .login { flex-direction: column; }
+  .login-marca { flex: none; padding: 30px 24px 60px; gap: 30px; }
+  .login-form { padding: 30px 24px; }
+}
+
+/* ---------- Factura ---------- */
+.factura-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 40, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+}
+.factura {
+  background: #fff;
+  width: 100%;
+  max-width: 560px;
+  max-height: 95vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  padding: 28px;
+  color: #1c1f2e;
+}
+.factura-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 2px solid var(--morado);
+  padding-bottom: 14px;
+}
+.factura-encabezado p { margin: 4px 0 0; font-size: 13px; color: #6b7080; }
+.factura-logo { height: 40px; }
+.factura-numero { display: flex; flex-direction: column; text-align: right; font-size: 13px; gap: 3px; }
+.factura-numero strong { color: var(--navy); font-size: 15px; }
+.factura-cliente { margin: 16px 0; font-size: 14px; }
+.factura-cliente h4 { margin: 0 0 6px; color: var(--navy); }
+.factura-cliente p { margin: 2px 0; }
+.factura-tabla th:not(:first-child), .factura-tabla td:not(:first-child) { text-align: right; }
+.factura-totales { margin: 14px 0 0 auto; max-width: 260px; font-size: 14px; }
+.factura-totales p { display: flex; justify-content: space-between; margin: 6px 0; }
+.factura-total { border-top: 2px solid var(--navy); padding-top: 8px; font-weight: bold; font-size: 16px; color: var(--navy); }
+.factura-nota { font-size: 11px; color: #888; text-align: center; margin-top: 18px; }
+
+/* Al imprimir solo se ve la factura */
+@media print {
+  body * { visibility: hidden; }
+  .factura, .factura * { visibility: visible; }
+  .factura { position: absolute; left: 0; top: 0; max-height: none; box-shadow: none; }
+  .factura-fondo { background: none; }
+  .no-imprimir { display: none !important; }
+}
