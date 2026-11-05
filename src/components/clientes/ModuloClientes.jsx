@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { listar, guardar, actualizar, eliminar } from '../../services/api.js';
+import { puede } from '../../permisos.js';
 import Alerta from '../Alerta.jsx';
 import ClienteForm from './ClienteForm.jsx';
 import ClienteLista from './ClienteLista.jsx';
@@ -7,8 +8,12 @@ import ClienteLista from './ClienteLista.jsx';
 /**
  * Contenedor del módulo de Clientes.
  * Sigue el mismo patrón del módulo de Productos.
+ * El Vendedor crea y edita clientes, pero solo el Admin puede eliminarlos.
+ * Props: usuario (para saber qué puede hacer su rol)
  */
-function ModuloClientes() {
+function ModuloClientes({ usuario }) {
+  const puedeEliminar = puede(usuario, 'eliminar:clientes');
+
   const [clientes, setClientes] = useState([]);
   const [clienteEditar, setClienteEditar] = useState(null);
   const [alerta, setAlerta] = useState({ tipo: '', mensaje: '' });
@@ -70,7 +75,11 @@ function ModuloClientes() {
           onGuardar={manejarGuardar}
           onCancelar={() => setClienteEditar(null)}
         />
-        <ClienteLista clientes={clientes} onEditar={setClienteEditar} onEliminar={manejarEliminar} />
+        <ClienteLista
+          clientes={clientes}
+          onEditar={setClienteEditar}
+          onEliminar={puedeEliminar ? manejarEliminar : undefined}
+        />
       </div>
     </section>
   );

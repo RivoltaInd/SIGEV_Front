@@ -34,7 +34,7 @@ function ClienteForm({ clienteEditar, onGuardar, onCancelar }) {
         if (valor && !/^\d{7,10}$/.test(valor)) return 'El teléfono debe tener entre 7 y 10 números';
         return '';
       case 'correo':
-        if (valor && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) return 'El correo no es válido';
+        if (valor && !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(valor)) return 'El correo no es válido';
         return '';
       default:
         return '';

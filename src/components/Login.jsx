@@ -3,8 +3,9 @@ import { iniciarSesion } from '../services/api.js';
 
 /**
  * Pantalla de inicio de sesión.
+ * "Recordarme" hace que la sesión en el servidor dure 8 horas en vez de 30 minutos.
  * Props:
- *  - onIngresar(usuario, recordar): avisa a App que el usuario entró
+ *  - onIngresar(usuario): avisa a App que el usuario entró
  */
 function Login({ onIngresar }) {
   const [correo, setCorreo] = useState('');
@@ -17,12 +18,12 @@ function Login({ onIngresar }) {
 
     // Validaciones básicas antes de consultar
     if (!correo.trim() || !clave) return setError('Ingrese correo y contraseña');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) return setError('El correo no es válido');
+    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(correo)) return setError('El correo no es válido');
 
     try {
-      const usuario = await iniciarSesion(correo.trim().toLowerCase(), clave);
+      const usuario = await iniciarSesion(correo.trim().toLowerCase(), clave, recordar);
       setError('');
-      onIngresar(usuario, recordar);
+      onIngresar(usuario);
     } catch (err) {
       setError(err.message);
     }
@@ -36,7 +37,6 @@ function Login({ onIngresar }) {
         <div className="login-ola" />
         <div className="login-textos">
           <p className="login-titulo">Sistema de Gestión de Ventas</p>
-          <p className="login-sub">Ferretería - Cali, Colombia</p>
         </div>
       </div>
 
@@ -58,12 +58,6 @@ function Login({ onIngresar }) {
         {error && <small className="error">{error}</small>}
 
         <button type="submit" className="login-boton">INICIAR SESIÓN</button>
-
-        <div className="login-prueba">
-          <strong>CREDENCIALES DE PRUEBA</strong>
-          <span>Admin: admin@sigev.com / admin123</span>
-          <span>Vendedor: vendedor@sigev.com / vende123</span>
-        </div>
       </form>
     </div>
   );

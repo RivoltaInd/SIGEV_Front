@@ -35,7 +35,6 @@ function Factura({ venta, producto, cliente, onCerrar }) {
         <header className="factura-encabezado">
           <div>
             <img src="/logo.png" alt="SIGEV" className="factura-logo" />
-            <p>Ferretería · Cali, Colombia</p>
           </div>
           <div className="factura-numero">
             <strong>FACTURA DE VENTA</strong>

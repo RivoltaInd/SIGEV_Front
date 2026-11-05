@@ -2,11 +2,13 @@
  * Tabla de productos. No tiene estado propio: muestra lo que recibe.
  * Props:
  *  - productos: lista a mostrar
- *  - onEditar(producto), onEliminar(codigo)
+ *  - onEditar(producto), onEliminar(codigo): opcionales; si no llegan
+ *    (el rol no tiene permiso) no se muestra el botón
  */
 function ProductoLista({ productos, onEditar, onEliminar }) {
   // Formato de pesos colombianos
   const pesos = (v) => '$' + Number(v).toLocaleString('es-CO');
+  const conAcciones = onEditar || onEliminar;
 
   return (
     <div className="tarjeta lista">
@@ -17,7 +19,8 @@ function ProductoLista({ productos, onEditar, onEliminar }) {
         <table>
           <thead>
             <tr>
-              <th>Código</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th>
+              <th>Código</th><th>Nombre</th><th>Precio</th><th>Stock</th>
+              {conAcciones && <th>Acciones</th>}
             </tr>
           </thead>
           <tbody>
@@ -28,10 +31,12 @@ function ProductoLista({ productos, onEditar, onEliminar }) {
                 <td>{p.nombre}</td>
                 <td>{pesos(p.precio)}</td>
                 <td className={p.stock <= 5 ? 'bajo' : ''}>{p.stock}</td>
-                <td>
-                  <button onClick={() => onEditar(p)}>Editar</button>
-                  <button className="peligro" onClick={() => onEliminar(p.codigo)}>Eliminar</button>
-                </td>
+                {conAcciones && (
+                  <td>
+                    {onEditar && <button onClick={() => onEditar(p)}>Editar</button>}
+                    {onEliminar && <button className="peligro" onClick={() => onEliminar(p.codigo)}>Eliminar</button>}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

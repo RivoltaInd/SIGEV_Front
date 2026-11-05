@@ -3,7 +3,7 @@ import { useState } from 'react';
 /**
  * Tabla de clientes con buscador.
  * Estado propio: filtro (texto que escribe el usuario).
- * Props: clientes, onEditar(cliente), onEliminar(id)
+ * Props: clientes, onEditar(cliente), onEliminar(id) (opcional: sin permiso no hay botón)
  */
 function ClienteLista({ clientes, onEditar, onEliminar }) {
   const [filtro, setFiltro] = useState('');
@@ -41,7 +41,7 @@ function ClienteLista({ clientes, onEditar, onEliminar }) {
                 <td>{c.correo || '—'}</td>
                 <td>
                   <button onClick={() => onEditar(c)}>Editar</button>
-                  <button className="peligro" onClick={() => onEliminar(c.id)}>Eliminar</button>
+                  {onEliminar && <button className="peligro" onClick={() => onEliminar(c.id)}>Eliminar</button>}
                 </td>
               </tr>
             ))}

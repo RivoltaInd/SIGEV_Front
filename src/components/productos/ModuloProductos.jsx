@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { listar, guardar, actualizar, eliminar } from '../../services/api.js';
+import { puede } from '../../permisos.js';
 import Alerta from '../Alerta.jsx';
 import ProductoForm from './ProductoForm.jsx';
 import ProductoLista from './ProductoLista.jsx';
@@ -8,8 +9,14 @@ import ProductoLista from './ProductoLista.jsx';
  * Contenedor del módulo de Productos.
  * Maneja los datos y la comunicación con el servicio;
  * el formulario y la lista solo muestran y avisan.
+ * El Vendedor solo consulta: no ve el formulario ni los botones de editar/eliminar.
+ * Props: usuario (para saber qué puede hacer su rol)
  */
-function ModuloProductos() {
+function ModuloProductos({ usuario }) {
+  const puedeCrear = puede(usuario, 'crear:productos');
+  const puedeEditar = puede(usuario, 'editar:productos');
+  const puedeEliminar = puede(usuario, 'eliminar:productos');
+
   const [productos, setProductos] = useState([]);
   const [productoEditar, setProductoEditar] = useState(null);
   const [alerta, setAlerta] = useState({ tipo: '', mensaje: '' });
@@ -61,16 +68,19 @@ function ModuloProductos() {
     <section>
       <h2>Gestión de Productos</h2>
       <Alerta {...alerta} onCerrar={() => setAlerta({ tipo: '', mensaje: '' })} />
-      <div className="modulo">
-        <ProductoForm
-          productoEditar={productoEditar}
-          onGuardar={manejarGuardar}
-          onCancelar={() => setProductoEditar(null)}
-        />
+      {!puedeCrear && <span className="solo-lectura">Solo consulta · tu rol no modifica productos</span>}
+      <div className={puedeCrear ? 'modulo' : 'modulo solo'}>
+        {puedeCrear && (
+          <ProductoForm
+            productoEditar={productoEditar}
+            onGuardar={manejarGuardar}
+            onCancelar={() => setProductoEditar(null)}
+          />
+        )}
         <ProductoLista
           productos={productos}
-          onEditar={setProductoEditar}
-          onEliminar={manejarEliminar}
+          onEditar={puedeEditar ? setProductoEditar : undefined}
+          onEliminar={puedeEliminar ? manejarEliminar : undefined}
         />
       </div>
     </section>
